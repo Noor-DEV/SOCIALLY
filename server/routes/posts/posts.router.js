@@ -1,13 +1,13 @@
 const router = require("express").Router();
-const upload = require("../config/multer");
-const { isUserAuthenticated } = require("../middleware/permissions.auth");
+const { upload } = require("../../config/imgUpload");
+const { isUserAuthenticated } = require("../../middleware/permissions.auth");
 const {
   getFeedPosts,
   getUserPosts,
   likePost,
   createPost,
   getPost,
-} = require("../controllers/posts");
+} = require("./posts.controller");
 
 router.get("/", isUserAuthenticated, getFeedPosts); //............................................................
 // router.get("/:userId/", verifyToken, getUserPosts); //MOVED_TO_USER_ROUTES -- it kinda is user specific

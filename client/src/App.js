@@ -2,7 +2,7 @@ import React, { useMemo, useState, useEffect } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getMode } from "./store";
+// import { getMode, getToken, getUser } from "./store";
 
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
@@ -14,27 +14,40 @@ import ManualAuth from "./scenes/Auth/ManualAuth";
 import ProfilePage from "./scenes/profilePage/Index";
 import MyProfile from "./scenes/profilePage/MyProfile";
 import Success from "./scenes/Auth/AfterAuth/Success";
-import { setLogin } from "./store/index";
+import {
+  setLogin,
+  getMode,
+  getToken,
+  getUser,
+  getIsAuth,
+  changeAuth,
+} from "./store/index";
 
 function App() {
   const dispatch = useDispatch();
-  const [isAuth, setIsAuth] = useState(false);
-  const state = useSelector((state) => ({
-    user: state.user,
-    token: state.token,
-  }));
+  const token = useSelector(getToken);
+  const user = useSelector(getUser);
+  const isAuth = useSelector(getIsAuth);
+
   useEffect(() => {
-    fetch("http://localhost:8000/isAuth", { credentials: "include" })
+    fetch("http://localhost:8000/isAuth", {
+      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         if (!data.isAuth) {
-          return setIsAuth(state.user && state.token ? true : false);
+          const calculated_isAuth = Boolean(token && user);
+
+          return dispatch(changeAuth({ isAuth: calculated_isAuth }));
         }
-        setIsAuth(data.isAuth);
+
+        dispatch(changeAuth({ isAuth: data.isAuth }));
         dispatch(setLogin({ user: data.user, token: null }));
-        console.log(data, "........data.....");
       });
-  }, [isAuth]);
+  });
 
   const mode = useSelector(getMode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);

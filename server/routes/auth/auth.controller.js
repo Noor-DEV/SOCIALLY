@@ -1,8 +1,9 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const User = require("../models/User.js");
+const User = require("../../models/User");
 const passport = require("passport");
-const { extractFriends, formatOutPut } = require("./utils");
+const { extractFriends, formatOutPut } = require("../../utils/utils");
+const { uploadImg } = require("../../config/imgUpload");
 
 module.exports.register = async (req, res) => {
   const {
@@ -10,12 +11,27 @@ module.exports.register = async (req, res) => {
     last_name,
     email,
     password,
-    picture_path, // from req by multer
+    picture_path, // from req by multer/cloudinary
     friends, // 0 at first
     location,
     occupation,
   } = req.body;
-  const { filename } = req.file;
+  if (!first_name || !last_name || !email || !password) {
+    return res.status(400).json({ msg: "Missing required properties....." });
+  }
+  if (password.length < 6) {
+    return res
+      .status(400)
+      .json({ error: "Password Should be atleast 6 characters long" });
+  }
+  const [err, uploadedImg] = await uploadImg(req.file.path);
+  if (err) {
+    return res.json({
+      msg: "ERROR UPLOADING IMG FOR NEW USER",
+      err,
+      errMessage: err.message,
+    });
+  }
 
   try {
     const salt = await bcrypt.genSalt();
@@ -26,7 +42,7 @@ module.exports.register = async (req, res) => {
       last_name,
       email,
       password: pwdHash,
-      picture_path: filename,
+      picture_path: uploadedImg.secure_url,
       friends,
       location,
       occupation,

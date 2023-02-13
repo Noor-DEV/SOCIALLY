@@ -20,7 +20,7 @@ const AdvertisementWidget = () => {
         width="100%"
         height="auto"
         alt="advert"
-        src="http://localhost:8000/assets/1674669673392-luke.jpg"
+        src="https://res.cloudinary.com/dns0lkiu6/image/upload/v1675606474/1675606427330-luke.jpg"
         style={{
           borderRadius: "0.75rem",
           margin: "0.75rem 0",

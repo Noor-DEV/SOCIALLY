@@ -1,10 +1,11 @@
 const router = require("express").Router();
 const passport = require("passport");
-const authRoutes = require("./auth");
-const userRoutes = require("./users");
-const postRoutes = require("./posts");
+const authRoutes = require("./auth/auth.router");
+const userRoutes = require("./users/users.router");
+const postRoutes = require("./posts/posts.router");
 const jwt = require("jsonwebtoken");
-const { extractFriends, formatOutPut } = require("../controllers/utils");
+const { verifyToken } = require("../middleware/permissions.auth");
+const { extractFriends, formatOutPut } = require("../utils/utils");
 
 router.use("/auth", authRoutes);
 router.use("/users", userRoutes);
@@ -48,6 +49,6 @@ router.get("/isAuth", (req, res) => {
   if (req.user && req.isAuthenticated()) {
     return res.json({ msg: "AUTHENTICATED", isAuth: true, user: req.user });
   }
-  return res.json({ msg: "NOT_AUTHENTICATED", isAuth: false });
+  return res.json({ isAuth: false, user: null });
 });
 module.exports = router;

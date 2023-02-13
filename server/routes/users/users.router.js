@@ -4,9 +4,9 @@ const {
   getUserFriends,
   addRemoveFriend,
   getAllUsers,
-} = require("../controllers/users");
-const { getUserPosts } = require("../controllers/posts");
-const { isUserAuthenticated } = require("../middleware/permissions.auth");
+} = require("./users.controller");
+const { getUserPosts } = require("../posts/posts.controller");
+const { isUserAuthenticated } = require("../../middleware/permissions.auth");
 
 //READ ROUTES
 router.get("/", getAllUsers);

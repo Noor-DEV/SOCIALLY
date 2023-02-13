@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   IconButton,
@@ -28,15 +28,21 @@ import {
   getUser,
   setLogout,
   setPosts,
+  setLogin,
+  getToken,
+  getIsAuth,
 } from "../../store/index";
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "../../components/FlexBetween";
 
 const Navbar = () => {
+  const token = useSelector(getToken);
+  const user = useSelector(getUser);
+  const isAuth = useSelector(getIsAuth);
+
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector(getUser);
   const mode = useSelector(getMode);
   const isNonMobileScreen = useMediaQuery("(min-width:1000px)");
   const theme = useTheme();
@@ -46,14 +52,6 @@ const Navbar = () => {
   const background = theme.palette.background.default;
   const primaryLight = theme.palette.primary.light;
   const alt = theme.palette.background.alt;
-
-  const isAuth = useSelector((state) => {
-    if (state.user && state.token) {
-      return true;
-    } else {
-      return false;
-    }
-  });
 
   let fullName;
   if (user && user.first_name) {
@@ -191,7 +189,7 @@ const Navbar = () => {
                     value={fullName}
                     sx={{
                       backgroundColor: neutralLight,
-                      width: "150px",
+                      width: "200px",
                       p: ".25rem 1rem",
                       broderRadius: ".25rem",
                       "& .MuiSvgIcon-root": {

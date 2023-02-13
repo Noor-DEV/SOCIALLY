@@ -75,6 +75,9 @@ const Form = () => {
         console.log(data, "------SignedUp&&LoggedIN-----------");
         console.log(onSubmitProps, "------onSubmitProps---------");
         onSubmitProps.resetForm();
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
       })
 
       .catch((err) => {
@@ -97,6 +100,9 @@ const Form = () => {
         console.log(data, "---loggedIN------");
         console.log(onSubmitProps, "----------onSubmitProps-----------");
         onSubmitProps.resetForm();
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
       });
   };
 

@@ -20,7 +20,8 @@ const verifyToken = (req) => {
   }
   // return res.json({ token: token || "NO_TOKEN", name: "NOOR" });
 };
-module.exports.isUserAuthenticated = (req, res, next) => {
+const isUserAuthenticated = (req, res, next) => {
+
   if (!req.header("Authorization") && !req.user && !req.isAuthenticated()) {
     return res.status(403).json({ msg: "NO TOKEN, can't access resource" });
   } else if (req.user && req.isAuthenticated()) {
@@ -48,3 +49,5 @@ module.exports.isUserAuthenticated = (req, res, next) => {
     }
   }
 };
+
+module.exports = { isUserAuthenticated, verifyToken };

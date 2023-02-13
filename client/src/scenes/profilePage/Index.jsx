@@ -7,11 +7,12 @@ import MyPostWidget from "../widgets/MyPostWidget";
 import PostsWidget from "../widgets/PostsWidget";
 import UserWidget from "../widgets/UserWidget";
 import { useNavigate, useParams } from "react-router-dom";
-import { getToken, getUser } from "../../store";
+import { getToken, getUser, setPosts } from "../../store";
 
 const ProfilePage = () => {
   const [activeUser, setActiveUser] = useState();
   const { userId } = useParams();
+  const dispatch = useDispatch();
   const token = useSelector(getToken);
   const user = useSelector(getUser);
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
@@ -19,6 +20,7 @@ const ProfilePage = () => {
   const fetchUser = async () => {
     fetch(`http://localhost:8000/users/${userId}`, {
       method: "GET",
+      credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -28,8 +30,22 @@ const ProfilePage = () => {
         setActiveUser(data.user);
       });
   };
+  const fetchUserPosts = async () => {
+    fetch(`http://localhost:8000/users/${userId}/posts`, {
+      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "........userPosts......");
+        dispatch(setPosts({ posts: data.posts }));
+      });
+  };
   useEffect(() => {
     fetchUser();
+    fetchUserPosts();
   }, []); //eslint-disable-line
   if (!activeUser) {
     return null;

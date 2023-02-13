@@ -1,28 +1,25 @@
-import { useEffect,useState } from 'react';
-import {Box,useMediaQuery } from '@mui/material';
-import {useSelector,useDispatch} from 'react-redux';
-import Navbar from '../navbar/Navbar';
-import FriendListWidget from '../widgets/FriendListWidget';
-import MyPostWidget from '../widgets/MyPostWidget';
-import PostsWidget from '../widgets/PostsWidget';
-import UserWidget from '../widgets/UserWidget';
-import { useNavigate, useParams } from 'react-router-dom';
-import { getToken, getUser } from '../../store';
-
+import { useEffect, useState } from "react";
+import { Box, useMediaQuery } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+import Navbar from "../navbar/Navbar";
+import FriendListWidget from "../widgets/FriendListWidget";
+import MyPostWidget from "../widgets/MyPostWidget";
+import PostsWidget from "../widgets/PostsWidget";
+import UserWidget from "../widgets/UserWidget";
+import { getToken, getUser } from "../../store";
 
 const MyProfile = () => {
-  const [activeUser,setActiveUser] = useState();
+  const [activeUser, setActiveUser] = useState();
   const user = useSelector(getUser);
   const token = useSelector(getToken);
-  const isNonMobileScreens = useMediaQuery('(min-width:1000px)');
+  const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
-  
-useEffect(()=>{
-      setActiveUser(user);
-},[])//eslint-disable-line
-if(!activeUser){
-  return null;  
-}
+  useEffect(() => {
+    setActiveUser(user);
+  }, []); //eslint-disable-line
+  if (!activeUser) {
+    return null;
+  }
   return (
     <Box>
       <Navbar />
@@ -34,7 +31,10 @@ if(!activeUser){
         justifyContent="center"
       >
         <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
-          <UserWidget userId={activeUser._id} picture_path={activeUser.picture_path} />
+          <UserWidget
+            userId={activeUser._id}
+            picture_path={activeUser.picture_path}
+          />
           <Box m="2rem 0" />
           <FriendListWidget userId={activeUser._id} />
         </Box>
@@ -44,7 +44,7 @@ if(!activeUser){
         >
           <MyPostWidget picture_path={activeUser.picture_path} />
           <Box m="2rem 0" />
-          <PostsWidget user_id={activeUser._id} isProfile /> 
+          <PostsWidget user_id={activeUser._id} isProfile />
         </Box>
       </Box>
     </Box>

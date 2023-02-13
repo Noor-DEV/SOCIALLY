@@ -1,16 +1,17 @@
-const Post = require("../models/Post");
-const User = require("../models/User");
+const Post = require("../../models/Post");
+const User = require("../../models/User");
+const { uploadImg } = require("../../config/imgUpload");
 
 //CREATE
 module.exports.createPost = async (req, res) => {
   try {
     const { user_id, description } = req.body;
-    let file_name;
-    if (req.file) {
-      file_name = req.file.filename;
-    } else {
-      file_name = "";
+    console.log(req.file, ":.............req.file..................:");
+    const [err, uploadedImg] = await uploadImg(req.file.path);
+    if (err) {
+      return res.json({ msg: "ERROR UPLOADING IMG 2 CLOUDINARY....." });
     }
+
     const user = await User.findOne({ _id: user_id });
 
     const newPost = new Post({
@@ -20,7 +21,7 @@ module.exports.createPost = async (req, res) => {
       location: user.location,
       description,
       user_picture_path: user.picture_path,
-      picture_path: file_name,
+      picture_path: uploadedImg.secure_url,
       // likes: {},
       // comments: {},
     });
@@ -66,7 +67,6 @@ module.exports.getPost = (req, res) => {};
 module.exports.likePost = async (req, res) => {
   const { postId } = req.params;
   const { user_id } = req.body;
-  
 
   try {
     const post = await Post.findById(postId);

@@ -1,18 +1,23 @@
-const Post = require("../models/Post");
-const User = require("../models/User");
-const {extractFriends,formatOutPut} = require('./utils')
-
+const Post = require("../../models/Post");
+const User = require("../../models/User");
+const { extractFriends, formatOutPut } = require("../../utils/utils");
 
 module.exports.getUser = async (req, res) => {
   const { userId } = req.params;
   try {
     const user = await User.findOne({ _id: userId });
     if (!user) return res.status(400).json({ msg: "USER DOES NOT EXIST" });
-    const posts = await Post.find({user_id:userId})
-    res.status(200).json({user:{...formatOutPut(user),friends:await extractFriends(user.friends)},postsData:{
-      amount_of_posts:posts.length,
-      posts
-    }});
+    const posts = await Post.find({ user_id: userId });
+    res.status(200).json({
+      user: {
+        ...formatOutPut(user),
+        friends: await extractFriends(user.friends),
+      },
+      postsData: {
+        amount_of_posts: posts.length,
+        posts,
+      },
+    });
   } catch (err) {
     return res.status(500).json({
       error: err.message,
@@ -35,7 +40,7 @@ module.exports.getUserFriends = async (req, res) => {
 module.exports.addRemoveFriend = async (req, res) => {
   const { userId, friendId } = req.params;
   const user = await User.findOne({ _id: userId });
-  let isFriend = user.friends.includes(friendId)
+  let isFriend = user.friends.includes(friendId);
   if (isFriend) {
     user.friends = user.friends.filter((id) => id !== friendId);
   } else {
@@ -43,11 +48,11 @@ module.exports.addRemoveFriend = async (req, res) => {
   }
   await user.save();
 
-  const friends = await extractFriends(user.friends)
+  const friends = await extractFriends(user.friends);
 
   res.json({
-    friends_data:{
-      no_of_friends:friends.length,
+    friends_data: {
+      no_of_friends: friends.length,
       friends,
     },
     user: formatOutPut(user),

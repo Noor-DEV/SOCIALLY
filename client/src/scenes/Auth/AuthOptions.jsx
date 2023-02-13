@@ -19,7 +19,7 @@ const AuthOptions = () => {
     const screenHeight = window.innerHeight;
     const left = (screenWidth - 400) / 2;
     const top = (screenHeight - 400) / 2;
-    const newWindow = window.open(googleLoginURL, "_blank");
+    const newWindow = window.open(googleLoginURL);
     // "width=400,height=400,left=" + left + ",top=" + top + ""
     timer = setInterval(() => {
       if (newWindow.closed) {

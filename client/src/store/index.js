@@ -5,7 +5,7 @@ const INITIAL_STATE = {
   user: { first_name: null, last_name: null, friends: null },
   token: null,
   posts: [],
-  POP_UP_STATE: "NOT_YET", // NOT_YET/OPEN/CLOSED
+  isAuth: false,
 };
 //STATE-SELECTORS.............
 export const getMode = (state) => state.mode;
@@ -13,7 +13,7 @@ export const getUser = (state) => state.user;
 export const getToken = (state) => state.token;
 export const getPosts = (state) => state.posts;
 export const getFriends = (state) => state.user.friends;
-export const getPopUpState = (state) => state.POP_UP_STATE;
+export const getIsAuth = (state) => state.isAuth;
 //STATE-SELECTORS.............
 export const authSlice = createSlice({
   name: "auth",
@@ -50,15 +50,8 @@ export const authSlice = createSlice({
       });
       state.posts = updatedPosts;
     },
-    openPopUp: (state, action) => {
-      state.POP_UP_STATE = "OPEN";
-    },
-    closePopUp: (state) => {
-      console.log("CLOSED...........inside-reduxx.........");
-      state.POP_UP_STATE = "CLOSED";
-    },
-    defaultPopUp: (state) => {
-      state.POP_UP_STATE = "NOT_YET";
+    changeAuth: (state, action) => {
+      state.isAuth = action.payload.isAuth;
     },
   },
 });
@@ -70,9 +63,7 @@ export const {
   setLogout,
   setFriends,
   changeMode,
-  openPopUp,
-  closePopUp,
-  defaultPopUp,
+  changeAuth,
 } = authSlice.actions;
 
 export default authSlice.reducer;
