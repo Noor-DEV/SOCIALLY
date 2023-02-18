@@ -50,7 +50,8 @@ const passportGoogleStrategy = new Strategy(
 passport.use(passportGoogleStrategy);
 
 passport.serializeUser((user, done) => {
-  done(null, user._id);
+  console.log("SERIALIZED....................",user._id.toHexString(),'-------------',user)
+ return done(null, user._id.toHexString());
 });
 
 passport.deserializeUser(async (user_id, done) => {
@@ -62,6 +63,6 @@ passport.deserializeUser(async (user_id, done) => {
     })
     .catch((err) => {
       console.log(".........error desiUser........", err);
-      done(err, null);
+      return done(err, null);
     });
 });

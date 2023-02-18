@@ -1,9 +1,13 @@
 /client/node_modules
-
+client/node_modules
+/client/README.md
+client/README.md
 /server/node_modules
+server/node_modules
 
 /server/.env
 /draft.md
+draft.md
 /server/public/
 
 

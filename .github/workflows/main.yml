@@ -1,1 +1,8 @@
-
+name: SOCIAL_APP CI
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+jobs:
+  build:
