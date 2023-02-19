@@ -1,0 +1,23 @@
+{
+  "name": "social_app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "npm run install --prefix client && npm run install --prefix server",
+    "server": "node server.js --prefix server",
+    "deploy": "npm run build --prefix client && npm start --prefix server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Noor-DEV/SOCIALLY.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Noor-DEV/SOCIAL_APP/issues"
+  },
+  "homepage": "https://github.com/Noor-DEV/SOCIAL_APP#readme"
+}

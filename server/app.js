@@ -6,10 +6,10 @@ const helmet = require("helmet");
 const cookieSession = require("cookie-session");
 const path = require("path");
 const allRoutes = require("./routes/index");
-require('dotenv').config();
+require("dotenv").config();
 const app = express();
-app.use(express.json({ extended: true,/*limit: "30mb"*/ }));
-app.use(express.urlencoded({ extended: false, /*limit: "30mb"*/}));
+app.use(express.json({ extended: true /*limit: "30mb"*/ }));
+app.use(express.urlencoded({ extended: false /*limit: "30mb"*/ }));
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 //HAS_AN_ERROR_CHECKOUT B4 UNCOMMENTING
 app.use(
