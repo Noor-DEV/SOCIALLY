@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import classes from "./style.module.css";
-import { useNavigate } from "react-router-dom";
 
 const Success = () => {
   useEffect(() => {

@@ -6,7 +6,7 @@ import FriendListWidget from "../widgets/FriendListWidget";
 import MyPostWidget from "../widgets/MyPostWidget";
 import PostsWidget from "../widgets/PostsWidget";
 import UserWidget from "../widgets/UserWidget";
-import { getToken, getUser } from "../../store";
+import { getUser } from "../../store";
 
 const MyProfile = () => {
   const [activeUser, setActiveUser] = useState();
