@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from "react";
+import { useEffect } from "react";
 import { Box, useTheme, Typography } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import Friend from "../../components/Friend";
@@ -10,7 +10,7 @@ const FriendListWidget = ({ userId }) => {
   const token = useSelector(getToken);
   const friends = useSelector(getFriends);
 
-  const fetchFriends = useCallback(() => {
+  useEffect(() => {
     fetch(`http://localhost:8000/users/${userId}/friends`, {
       credentials: "include",
       headers: {
@@ -21,11 +21,7 @@ const FriendListWidget = ({ userId }) => {
       .then((data) => {
         dispatch(setFriends({ friends: data.friends }));
       });
-  }, [userId, token]);
-
-  useEffect(() => {
-    fetchFriends();
-  }, [fetchFriends]);
+  }, [userId, token, dispatch]);
   return (
     <WidgetWrapper>
       <Typography
