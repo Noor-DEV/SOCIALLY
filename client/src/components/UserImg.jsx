@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from "@mui/material";
-import { styled } from "@mui/system";
+// import { styled } from "@mui/system";
 
 const UserImg = ({ image, size = "60px" }) => {
   return (

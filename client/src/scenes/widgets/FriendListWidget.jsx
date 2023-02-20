@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Box, useTheme, Typography } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import Friend from "../../components/Friend";

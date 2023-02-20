@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
-import { Box, Button, Container, IconButton, Typography } from "@mui/material";
-import { Google, GitHub } from "@mui/icons-material";
+import { useEffect } from "react";
+import { Box, Button, Typography } from "@mui/material";
+import { Google } from "@mui/icons-material";
 import Navbar from "../navbar/Navbar";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { getPopUpState, openPopUp } from "../../store";
 
 const AuthOptions = () => {
   // const dispatch = useDispatch();
@@ -15,10 +13,6 @@ const AuthOptions = () => {
     console.log("REDIRECT2GOOGLESSO....................");
     const googleLoginURL = "http://localhost:8000/login/google";
     let timer;
-    const screenWidth = window.innerWidth;
-    const screenHeight = window.innerHeight;
-    const left = (screenWidth - 400) / 2;
-    const top = (screenHeight - 400) / 2;
     const newWindow = window.open(googleLoginURL);
     // "width=400,height=400,left=" + left + ",top=" + top + ""
     timer = setInterval(() => {

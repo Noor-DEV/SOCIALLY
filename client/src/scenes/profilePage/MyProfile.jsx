@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Box, useMediaQuery } from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import Navbar from "../navbar/Navbar";
 import FriendListWidget from "../widgets/FriendListWidget";
 import MyPostWidget from "../widgets/MyPostWidget";
@@ -11,7 +11,6 @@ import { getToken, getUser } from "../../store";
 const MyProfile = () => {
   const [activeUser, setActiveUser] = useState();
   const user = useSelector(getUser);
-  const token = useSelector(getToken);
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
   useEffect(() => {

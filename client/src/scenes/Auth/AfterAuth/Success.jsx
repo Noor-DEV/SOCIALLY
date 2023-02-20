@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import classes from "./style.module.css";
-import { useSelector, useDispatch } from "react-redux";
-import { closePopUp, getPopUpState } from "../../../store";
 import { useNavigate } from "react-router-dom";
 
 const Success = () => {
-  const navigate = useNavigate();
   useEffect(() => {
     console.log("SUUCEESS-RENDERED........");
   }, []);
