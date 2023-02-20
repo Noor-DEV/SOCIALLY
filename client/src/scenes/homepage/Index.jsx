@@ -24,7 +24,7 @@ const HomePage = () => {
         justifyContent="space-between"
       >
         <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
-          <UserWidget userId={_id} picture_path={picture_path} />
+          {_id && <UserWidget userId={_id} picture_path={picture_path} />}
         </Box>
         <Box
           flexBasis={isNonMobileScreens ? "42%" : undefined}

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Box,
   IconButton,
@@ -22,28 +22,17 @@ import {
   Close,
 } from "@mui/icons-material";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  changeMode,
-  getMode,
-  getUser,
-  setLogout,
-  setPosts,
-  setLogin,
-  getToken,
-  getIsAuth,
-} from "../../store/index";
+import { changeMode, getUser, setLogout, getIsAuth } from "../../store/index";
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "../../components/FlexBetween";
 
 const Navbar = () => {
-  const token = useSelector(getToken);
   const user = useSelector(getUser);
   const isAuth = useSelector(getIsAuth);
 
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const mode = useSelector(getMode);
   const isNonMobileScreen = useMediaQuery("(min-width:1000px)");
   const theme = useTheme();
 
@@ -59,6 +48,24 @@ const Navbar = () => {
   } else {
     fullName = null;
   }
+  const LOG_OUT_BOTH_WAYS = async () => {
+    fetch("http://localhost:8000/auth/logout", {
+      credentials: "include",
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        navigate("/auth");
+        dispatch(setLogout());
+        localStorage.clear();
+      })
+      .catch((err) => {
+        navigate("/auth");
+        dispatch(setLogout());
+        localStorage.clear();
+      });
+    navigate("/auth");
+  };
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt} width="100vw">
       <FlexBetween gap="1.75rem">
@@ -205,7 +212,7 @@ const Navbar = () => {
                     <MenuItem>
                       <Typography>{fullName}</Typography>
                     </MenuItem>
-                    <MenuItem onClick={() => dispatch(setLogout())}>
+                    <MenuItem onClick={() => LOG_OUT_BOTH_WAYS()}>
                       <Typography>Log Out</Typography>
                     </MenuItem>
                   </Select>

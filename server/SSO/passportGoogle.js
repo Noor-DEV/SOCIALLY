@@ -3,6 +3,7 @@ const passport = require("passport");
 const { Strategy } = require("passport-google-oauth20");
 
 const verifyCb = async (accessToken, refreshToken, profile, done) => {
+  console.log(profile, ".....................profile................");
   if (!profile) {
     console.log("NO_PROFILE_TO_USE_WAS_PASSED");
     return;
@@ -50,8 +51,13 @@ const passportGoogleStrategy = new Strategy(
 passport.use(passportGoogleStrategy);
 
 passport.serializeUser((user, done) => {
-  console.log("SERIALIZED....................",user._id.toHexString(),'-------------',user)
- return done(null, user._id.toHexString());
+  console.log(
+    "SERIALIZED....................",
+    user._id,
+    "-------------",
+    user
+  );
+  return done(null, user._id);
 });
 
 passport.deserializeUser(async (user_id, done) => {

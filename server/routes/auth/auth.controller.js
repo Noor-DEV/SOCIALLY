@@ -4,6 +4,7 @@ const User = require("../../models/User");
 const passport = require("passport");
 const { extractFriends, formatOutPut } = require("../../utils/utils");
 const { uploadImg } = require("../../config/imgUpload");
+const cookieSession = require("cookie-session");
 
 module.exports.register = async (req, res) => {
   const {
@@ -103,4 +104,14 @@ module.exports.login = async (req, res) => {
       .status(500)
       .json({ error: err.message, msg: "ERROR_CREATING_USER_IN_DB" });
   }
+};
+
+module.exports.logout = async (req, res) => {
+  console.log("HIT..........");
+  req.session = null;
+  return res.json({
+    msg: "OK -- logged out",
+    isLoggedOut: true,
+    isLoggedIn: false,
+  });
 };
