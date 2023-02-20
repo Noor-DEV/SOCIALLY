@@ -1,4 +1,4 @@
-name: NASA Project CI
+name: SOCIALLY Project CI
 on:
   push:
     branches: [master]
