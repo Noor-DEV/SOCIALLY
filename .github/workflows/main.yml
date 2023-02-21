@@ -8,12 +8,15 @@ jobs:
   build:
     env:
       CI: true
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 19.x]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Use Node js version 19
         uses: actions/setup-node@v3
         with:
-          node-version: 19
+          node-version: ${{matrix.node-version}}
       - run: npm run setup
       - run: npm run build
